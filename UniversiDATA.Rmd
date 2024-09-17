@@ -111,7 +111,7 @@ library(plotmo)
 
 Lectura de las bases de datos "Matriculas". Selección solo alumnos de grado y asignación de la edad del alumno
 
-```{r leer datos matricula, cache=TRUE, warning=FALSE,message=FALSE, eval=FALSE}
+```{r leer datos matricula, warning = FALSE, message = FALSE}
 # UCM
 # ================
 ucm.1718 <- read_xlsx("Data/ucm-matriculas-2017-18-anonimizado_4.xlsx")
@@ -203,9 +203,9 @@ rm(urjc.1718,urjc.1819,urjc.1920,urjc.2021,urjc.2122,urjc.2223)
 urjc <- urjc[urjc$des_tipo_estudio=="Grado",]
 ```
 
-```{r}
-load("Data/Matriculas.RData")
-```
+<!-- ```{r} -->
+<!-- load("Data/Matriculas.RData") -->
+<!-- ``` -->
 
 ### Filtro alumnos de primer curso, primera matrícula
 
@@ -432,7 +432,7 @@ bd.t <- bd.t[!duplicated(bd.t$cod_titulacion), ]
 
 Lectura de base de datos de "Acceso" e incorporación de indicadores generales a cada estudiante de primero badado en la titulación en la que está matriculado ("cod_titulacion").
 
-```{r datos acceso, cache=TRUE}
+```{r datos acceso}
 # UCM
 # ===============
 ucm.a.1718 <- read_xlsx("Data/ucm-acceso-2017-18-anonimizado_0.xlsx")
@@ -557,7 +557,7 @@ xx <- data.frame(cod_universidad=row.names(xx),xx)
 
 Unión bases de datos de las 5 universidades
 
-```{r join, warning=FALSE,message=FALSE}
+```{r join, warning = FALSE, message = FALSE}
 bd <- rbind(bd.ucm,bd.uam,bd.uva,bd.uc3m,bd.urjc)
 # join PDI
 bd <- merge(bd,xx, by="cod_universidad",all.x = TRUE)
