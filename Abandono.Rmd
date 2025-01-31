@@ -5,6 +5,8 @@ subtitle: |
   |  
   | **Proyecto presentado al concurso "II Datathon UniversiDATA"**
   |
+  |  **FASE FINAL 3 FEBRERO 2025**
+  |
   |  **No citar este borrador sin permiso del autor**
   |  
   | Fernando A. López Hernández
@@ -83,6 +85,9 @@ En general todos los algoritmos mostraron buenas capacidades de predicción sin 
 @song2023 destaca cómo un algoritmo de selección de atributos permitió identificar factores clave que influyen en el abandono. Usando árboles de decisión, se definieron patrones para alertar sobre un abandono inminente. Una herramienta adaptada fue administrada en línea a 300 estudiantes de instituciones públicas y 200 de privadas en programas de educación superior. Los resultados evidenciaron que el algoritmo Random Forest fue el más preciso para identificar estudiantes en riesgo de abandono, subrayando su utilidad para desarrollar intervenciones efectivas. -->
 
 # Datos y metodología
+
+
+
 
 ```{r leer datos, echo=FALSE,cache=FALSE, warning=FALSE,message=FALSE}
 library(here)
