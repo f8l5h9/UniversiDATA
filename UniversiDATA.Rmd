@@ -20,7 +20,7 @@ fontsize: 12pt
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(echo=TRUE,cache = TRUE)
 ```
 
 # Introducción
@@ -231,8 +231,8 @@ bd$pm <- bd$des_provincia_residencia=="Madrid"
 hh <- bd %>% group_by(cod_titulacion) %>% 
   summarise(n.titula=n(),
             edad.media.tit = mean(edad,na.rm=T),
-            muni.local=sum(mm,na.rm=T)/n.titula,
-            prov.local=sum(pm,na.rm=T)/n.titula)
+            muni.local=round(sum(mm,na.rm=T)/n.titula,2),
+            prov.local=round(sum(pm,na.rm=T)/n.titula,2))
 bd <- merge(bd,hh,by="cod_titulacion",all.x = TRUE)
 bd.ucm <- bd
 
@@ -256,8 +256,8 @@ bd$pm <- bd$des_provincia_residencia=="Madrid"
 hh <- bd %>% group_by(cod_titulacion) %>% 
   summarise(n.titula=n(),
             edad.media.tit = mean(edad,na.rm=T),
-            muni.local=sum(mm,na.rm=T)/n.titula,
-            prov.local=sum(pm,na.rm=T)/n.titula)
+            muni.local=round(sum(mm,na.rm=T)/n.titula,2),
+            prov.local=round(sum(pm,na.rm=T)/n.titula,2))
 bd <- merge(bd,hh,by="cod_titulacion",all.x = TRUE)
 bd.uam <- bd
 
@@ -282,8 +282,8 @@ bd$pm <- bd$des_provincia_residencia=="Valladolid"
 hh <- bd %>% group_by(cod_titulacion) %>% 
   summarise(n.titula=n(),
             edad.media.tit = mean(edad,na.rm=T),
-            muni.local=sum(mm,na.rm=T)/n.titula,
-            prov.local=sum(pm,na.rm=T)/n.titula)
+            muni.local=round(sum(mm,na.rm=T)/n.titula,2),
+            prov.local=round(sum(pm,na.rm=T)/n.titula,2))
 bd <- merge(bd,hh,by="cod_titulacion",all.x = TRUE)
 bd.uva <- bd
 
@@ -308,8 +308,8 @@ bd$pm <- bd$des_provincia_residencia=="Madrid"
 hh <- bd %>% group_by(cod_titulacion) %>% 
   summarise(n.titula=n(),
             edad.media.tit = mean(edad,na.rm=T),
-            muni.local=sum(mm,na.rm=T)/n.titula,
-            prov.local=sum(pm,na.rm=T)/n.titula)
+            muni.local=round(sum(mm,na.rm=T)/n.titula,2),
+            prov.local=round(sum(pm,na.rm=T)/n.titula,2))
 bd <- merge(bd,hh,by="cod_titulacion",all.x = TRUE)
 bd.uc3m <- bd
 
@@ -335,8 +335,8 @@ bd$pm <- bd$des_provincia_residencia=="Madrid"
 hh <- bd %>% group_by(cod_titulacion) %>% 
   summarise(n.titula=n(),
             edad.media.tit = mean(edad,na.rm=T),
-            muni.local=sum(mm,na.rm=T)/n.titula,
-            prov.local=sum(pm,na.rm=T)/n.titula)
+            muni.local=round(sum(mm,na.rm=T)/n.titula,2),
+            prov.local=round(sum(pm,na.rm=T)/n.titula,2))
 bd <- merge(bd,hh,by="cod_titulacion",all.x = TRUE)
 bd.urjc <- bd
 rm(bd,hh)
@@ -444,11 +444,13 @@ rm(ucm.a.1718,ucm.a.1819,ucm.a.1920,ucm.a.2021,ucm.a.2122,ucm.a.2223)
 ucm.a$uni.madre <- (ucm.a$des_nivel_estudios_madre=="Estudios Superiores")
 ucm.a$uni.padre <- (ucm.a$des_nivel_estudios_padre=="Estudios Superiores")
 hh <- ucm.a %>% group_by(cod_titulacion) %>% 
-  summarize(n.acceso=n(), 
-            nota.mediana=median(nota_admision,na.rm=TRUE),
-            nota.min=min(nota_admision,na.rm=TRUE),
-            uni.madre=sum(uni.madre,na.rm=TRUE)/n.acceso,
-            uni.padre=sum(uni.padre,na.rm=TRUE)/n.acceso)
+  summarize(n.acceso = round(n()/6,0), 
+            nota.mediana = round(median(nota_admision,na.rm=TRUE),1),
+            nota.media = round(mean(nota_admision,na.rm=TRUE),1),
+            nota.sd=round(sd(nota_admision,na.rm=TRUE),2),
+            nota.min=round(min(nota_admision,na.rm=TRUE),1),
+            uni.madre=round(sum(uni.madre,na.rm=TRUE)/n(),2),
+            uni.padre=round(sum(uni.padre,na.rm=TRUE)/n(),2))
 bd.ucm <- merge(bd.ucm,hh,by="cod_titulacion",all.x = TRUE)
 
 # UAM
@@ -464,11 +466,13 @@ rm(uam.a.1718,uam.a.1819,uam.a.1920,uam.a.2021,uam.a.2122,uam.a.2223)
 uam.a$uni.madre <- (uam.a$des_nivel_estudios_madre=="Estudios Superiores")
 uam.a$uni.padre <- (uam.a$des_nivel_estudios_padre=="Estudios Superiores")
 hh <- uam.a %>% group_by(cod_titulacion) %>% 
-  summarize(n.acceso=n(), 
-            nota.mediana=median(nota_admision,na.rm=TRUE),
-            nota.min=min(nota_admision,na.rm=TRUE),
-            uni.madre=sum(uni.madre,na.rm=TRUE)/n.acceso,
-            uni.padre=sum(uni.padre,na.rm=TRUE)/n.acceso)
+  summarize(n.acceso = round(n()/6,0), 
+            nota.mediana = round(median(nota_admision,na.rm=TRUE),1),
+            nota.media = round(mean(nota_admision,na.rm=TRUE),1),
+            nota.sd=round(sd(nota_admision,na.rm=TRUE),2),
+            nota.min=round(min(nota_admision,na.rm=TRUE),1),
+            uni.madre=round(sum(uni.madre,na.rm=TRUE)/n(),2),
+            uni.padre=round(sum(uni.padre,na.rm=TRUE)/n(),2))
 bd.uam <- merge(bd.uam,hh,by="cod_titulacion",all.x = TRUE)
 
 # UVa
@@ -485,11 +489,13 @@ uva.a$uni.madre <- (uva.a$des_nivel_estudios_madre=="Estudios Superiores")
 uva.a$uni.padre <- (uva.a$des_nivel_estudios_padre=="Estudios Superiores")
 uva.a$nota_admision[uva.a$cod_titulacion==2502312] <- 5
 hh <- uva.a %>% group_by(cod_titulacion) %>% 
-  summarize(n.acceso=n(), 
-            nota.mediana=median(nota_admision,na.rm=TRUE),
-            nota.min=min(nota_admision,na.rm=TRUE),
-            uni.madre=sum(uni.madre,na.rm=TRUE)/n.acceso,
-            uni.padre=sum(uni.padre,na.rm=TRUE)/n.acceso)
+  summarize(n.acceso = round(n()/6,0), 
+            nota.mediana = round(median(nota_admision,na.rm=TRUE),1),
+            nota.media = round(mean(nota_admision,na.rm=TRUE),1),
+            nota.sd=round(sd(nota_admision,na.rm=TRUE),2),
+            nota.min=round(min(nota_admision,na.rm=TRUE),1),
+            uni.madre=round(sum(uni.madre,na.rm=TRUE)/n(),2),
+            uni.padre=round(sum(uni.padre,na.rm=TRUE)/n(),2))
 bd.uva <- merge(bd.uva,hh,by="cod_titulacion",all.x = TRUE)
 
 # UC3M
@@ -506,11 +512,13 @@ uc3m.a$uni.madre <- (uc3m.a$des_nivel_estudios_madre=="Estudios Superiores")
 uc3m.a$uni.padre <- (uc3m.a$des_nivel_estudios_padre=="Estudios Superiores")
 uc3m.a$nota_admision[uc3m.a$des_centro=="Centro Universitario Guardia Civil"] <- 5
 hh <- uc3m.a %>% group_by(cod_titulacion) %>% 
-  summarize(n.acceso=n(), 
-            nota.mediana=median(nota_admision,na.rm=TRUE),
-            nota.min=min(nota_admision,na.rm=TRUE),
-            uni.madre=sum(uni.madre,na.rm=TRUE)/n.acceso,
-            uni.padre=sum(uni.padre,na.rm=TRUE)/n.acceso)
+  summarize(n.acceso = round(n()/6,0), 
+            nota.mediana = round(median(nota_admision,na.rm=TRUE),1),
+            nota.media = round(mean(nota_admision,na.rm=TRUE),1),
+            nota.sd=round(sd(nota_admision,na.rm=TRUE),2),
+            nota.min=round(min(nota_admision,na.rm=TRUE),1),
+            uni.madre=round(sum(uni.madre,na.rm=TRUE)/n(),2),
+            uni.padre=round(sum(uni.padre,na.rm=TRUE)/n(),2))
 bd.uc3m <- merge(bd.uc3m,hh,by="cod_titulacion",all.x = TRUE)
 
 # URJC
@@ -526,13 +534,14 @@ rm(urjc.a.1718,urjc.a.1819,urjc.a.1920,urjc.a.2021,urjc.a.2122,urjc.a.2223)
 urjc.a$uni.madre <- (urjc.a$des_nivel_estudios_madre=="Estudios Superiores")
 urjc.a$uni.padre <- (urjc.a$des_nivel_estudios_padre=="Estudios Superiores")
 hh <- urjc.a %>% group_by(cod_titulacion) %>% 
-  summarize(n.acceso=n(), 
-            nota.mediana=median(nota_admision,na.rm=TRUE),
-            nota.min=min(nota_admision,na.rm=TRUE),
-            uni.madre=sum(uni.madre,na.rm=TRUE)/n.acceso,
-            uni.padre=sum(uni.padre,na.rm=TRUE)/n.acceso)
+  summarize(n.acceso = round(n()/6,0), 
+            nota.mediana = round(median(nota_admision,na.rm=TRUE),1),
+            nota.media = round(mean(nota_admision,na.rm=TRUE),1),
+            nota.sd=round(sd(nota_admision,na.rm=TRUE),2),
+            nota.min=round(min(nota_admision,na.rm=TRUE),1),
+            uni.madre=round(sum(uni.madre,na.rm=TRUE)/n(),2),
+            uni.padre=round(sum(uni.padre,na.rm=TRUE)/n(),2))
 bd.urjc <- merge(bd.urjc,hh,by="cod_titulacion",all.x = TRUE)
-
 ```
 
 ## Estructura del PDI
@@ -617,26 +626,170 @@ Calculo de la tasa de rendimiento y clasificación de estudiantes (0/1).
 # Tasa rendimiento
 bd$tr <- bd$num_total_creditos_sup_curso/bd$num_total_creditos_mat_curso
 # # Tasa éxito
-# bd$te <- bd$num_total_creditos_sup_curso/bd$num_creditos_pres_curso
+bd$te <- bd$num_total_creditos_sup_curso/bd$num_creditos_pres_curso
 # # Tasa evaluación
 # bd$tev <- bd$num_creditos_pres_curso/bd$num_total_creditos_mat_curso
 
-bd$abandono <- as.factor(bd$tr <= 18/60)
+bd$abandono <- as.factor(bd$tr <= 24/60)
 levels(bd$abandono) <- c("NO","SI")
-table(bd$abandono)
+table(bd$abandono)/dim(bd)[1]
 levels(bd$des_rama) <- c("AH","Ci","CS","CSJ","IA")
 ```
+
+```{r leer datos}
+# Lectura de datos
+# ==============================================================================
+load("~/Library/CloudStorage/Dropbox/UniversiDATA/Univerdidata.RData")
+```
+
 
 ## Algoritmo MARS
 
 ```{r algoritmo MARS}
 formula <- abandono ~ des_genero + doble + des_rama + adscrito + cod_universidad + 
-  n.titula + n.acceso + edad.media.tit + muni.local + prov.local + nota.mediana + 
-  nota.min + uni.padre + uni.madre + Profesor.Asociado + Profesor.Ayudante.Doctor
-mymars <- earth(formula, data = bd, minspan=500, endspan = 
-                  500,degree=2,glm=list(family=binomial))
+  n.titula + n.acceso + edad.media.tit + muni.local + prov.local + nota.mediana + nota.media + nota.min + uni.padre + uni.madre + Profesor.Asociado + Profesor.Ayudante.Doctor
+mymars <- earth(formula, data = bd, minspan=100, endspan = 
+                  100, degree = 2, glm=list(family=binomial))
 summary(mymars)
+library(caret)
+xx <- as.factor(ifelse(predict(mymars) > 0.12, 1, 0))
+levels(xx) <- c("NO","SI")
+confusionMatrix(xx, bd$abandono)
+
 plotmo(mymars)
 ```
+
+```{r graficos}
+plotmo(mymars,caption="", do.par=FALSE,npoints =F,pt.col="blue", cex.response=1,lwd.degree1=1, jitter = 1, grid.col = TRUE)
+```
+
+```{r logit como mars}
+mymars.logit <- glm(bd$abandono ~ mymars$bx[,-1],family = "binomial")
+summary(mymars.logit)
+```
+
+
+
+```{r}
+formula <- abandono ~ des_genero + doble + des_rama + adscrito + cod_universidad + 
+  n.titula + n.acceso + edad.media.tit + muni.local + prov.local + nota.mediana + nota.media + nota.min + uni.padre + uni.madre + Profesor.Asociado + Profesor.Ayudante.Doctor
+mylogit <- glm(formula ,family=binomial(link='logit'),data = bd)
+summary(mylogit)
+library(caret)
+xx <- as.factor(ifelse(predict(mylogit) > 0.12, 1, 0))
+levels(xx) <- c("NO","SI")
+confusionMatrix(xx, bd$abandono)
+```
+
+
+```{r cross-validation}
+library(tictoc)
+tic()
+fit <- earth(formula, data = bd, degree = 2, minspan = 500, 
+             endspan = 500, pmethod="cv", ncross=3, nfold=5, trace=.5,
+             glm = list(family=binomial))
+toc()
+plot(fit, which=1, col.rsq=0, ylim=c(0,0.1))
+```
+
+
+```{r entrenamiento mio}
+set.seed(123)
+library(rsample)
+train <- initial_split(bd, prop = 0.7, strata = abandono)
+# bd_train <- bd[train,]
+# bd_test  <- bd[-train,]
+bd_train <- training(train)
+bd_test <- testing(train)
+mymars.train <- earth(formula, data = bd_train, minspan=-2, 
+                      endspan = 500,degree=2, 
+                      glm=list(family=binomial))
+# Error de test del modelo
+# ==============================================================================
+predicciones <- predict(mymars.train, newdata = bd_test, type = "response")
+class_pred <- ifelse(predicciones > 0.5, 1, 0)
+table(bd_test$abandono,class_pred)
+library(ROCR)
+pred <- prediction(predicciones, bd_test$abandono)
+perf <- performance(pred, "tpr", "fpr")  # tpr: tasa de verdaderos positivos, fpr: tasa de falsos positivos
+# Trazar la curva ROC
+plot(perf, col = "red", main = "Curva ROC", lwd = 2)
+# Calcular el AUC
+auc <- performance(pred, "auc")
+auc_value <- auc@y.values[[1]]
+print(paste("AUC:", auc_value))
+#
+library(caret)
+xx <- as.factor(ifelse(predict(mymars) > 0.5, 1, 0))
+levels(xx) <- c("NO","SI")
+confusionMatrix(xx, bd$abandono)
+```
+
+
+```{r}
+# https://bradleyboehmke.github.io/HOML/mars.html#prerequisites-5
+# https://www.newtral.es/financiacion-publica-universidades/20240719/
+library(dplyr)
+hyper_grid <- expand.grid(
+  degree = 1:2, 
+  nprune = seq(15,30, length.out = 5) %>% floor()
+)
+
+set.seed(123)  # for reproducibility
+tic()
+tuned_mars <- train(
+  x = bd[,all.vars(formula)[-1]],
+  y = bd$abandono,
+  method = "earth",
+  trControl = trainControl(method = "cv", number = 10),
+  tuneGrid = hyper_grid)
+toc()
+# best model
+tuned_mars$bestTune
+##   nprune degree
+## 2     12      1
+
+# plot results
+ggplot(tuned_mars)
+```
+
+
+```{r}
+earth::evimp(mymars)
+```
+
+```{r}
+library(rpart)
+library(rpart.plot)
+ms <- 50
+mb <- 10
+control <- rpart.control(minsplit = ms,minbucket = mb, cp = 0.002)
+arbol_0 <- rpart(formula , data = bd, method = 'anova', control = control)
+layout(matrix(c(0,1,1,0,2,2,3,3), 2, 4, byrow = TRUE))
+rpart.plot(arbol_0,tweak=1,digits = 3)
+```
+
+```{r}
+set.seed(123)
+train <- sample(1:nrow(bd), size = .7*nrow(bd))
+bd_train <- bd[train,]
+bd_test  <- bd[-train,]
+
+# El árbol se crece al máximo posible para luego aplicar el pruning
+library(tree)
+control <- tree.control(dim(bd)[1], 
+                        mincut = 1, 
+                        minsize = 2,
+                        mindev  = 0)
+arbol_regresion_base<- tree(formula = formula,
+                            data    = bd,
+                            control = control)
+summary(arbol_regresion_base)
+set.seed(123)
+cv_arbol <- cv.tree(arbol_regresion_base, K = 5)
+size_optimo <- rev(cv_arbol$size)[which.min(rev(cv_arbol$dev))]
+paste("Tamaño óptimo encontrado:", size_optimo)
+```
+
 
 # Referencias
