@@ -787,18 +787,23 @@ levels(bd$doble) <- c("No","Si")
 chi <-chisq.test(table(bd$abandono,bd$adscrito))
 chi <-chisq.test(table(bd$abandono,bd$des_genero))
 
-tab2 <- as.data.frame(cbind(table(bd$abandono,bd$adscrito),table(bd$abandono,bd$des_genero),table(bd$abandono,bd$doble),table(bd$abandono,bd$cod_universidad),table(bd$abandono,bd$Rama)))
+tab2 <- as.data.frame(cbind(table(bd$abandono,bd$des_genero),
+                        table(bd$abandono,bd$adscrito),
+                        table(bd$abandono,bd$doble),
+                        table(bd$abandono,bd$cod_universidad),
+                        table(bd$abandono,bd$Rama)))
 zx <- tab2
 tab2 <- t(100*t(t(tab2)/colSums(tab2)))
-tab2 <- cbind(rowSums(t(zx)),tab2)
-kbl(tab2, col.names = c("N", "$TR04 \\geq 0,4$","$TR04<0,4$"), caption = "Número estudianes (N) y distribución poercentual en base a TR04 \\label{tab:estudiantes}", 
+tab2 <- cbind((t(zx)),tab2)
+kbl(tab2, col.names = c("$N (TR04)$","$N (TR04)$", "$\\% (TR04)$","$ \\% TR04$"), caption = "Número estudianes (N) y distribución porcentual en base a TR04 \\label{tab:estudiantes}", 
     format.args = list(decimal.mark = ","),align = "c", booktabs = T,format = "latex",digits=2, escape = FALSE) %>%
 kable_styling() %>%
   pack_rows("Género (mujer)", 1, 2) %>%
 pack_rows("Adscrito", 3, 4) %>%
 pack_rows("Doble", 5, 6) %>%
 pack_rows("Universidades", 7, 11) %>%
-pack_rows("Rama", 12, 16)
+pack_rows("Rama", 12, 16) %>%
+footnote(general = "Porcentajes calculados sobre suma elementos fila")
 ```
 
 ```{r tabla con graficos, warning=FALSE, message=FALSE,echo=FALSE}
